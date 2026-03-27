@@ -15,7 +15,7 @@ Challenges from https://www.ctfzone.com/#platform
 ### Web
 | Challenge | Difficulty | Technique |
 |---|---|---|
-| Coming Soon | Easy | |
+| Coming Soon | | |
 
 ### Hardware
 | Challenge | Difficulty | Technique |
