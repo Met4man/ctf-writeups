@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 350px;
+            height: 500px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Stats Styles */
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* History Styles */
+        .history-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-header {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header h3 {
+            font-size: 14px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            opacity: 0.7;
+            font-size: 14px;
+            transition: opacity 0.2s;
+        }
+
+        .icon-btn:hover {
+            opacity: 1;
+        }
+
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: transform 0.2s;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(2px);
+        }
+
+        .history-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .history-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .history-subject {
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+
+        .history-meta {
+            font-size: 11px;
+            opacity: 0.6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-score {
+            font-weight: 700;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 20px;
+            opacity: 0.5;
+            font-size: 13px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">🛡️</div>
+        <h1>PhishGuard</h1>
+        <p class="tagline">AI-Powered Email Protection</p>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-value" id="total-scanned">0</div>
+            <div class="stat-label">Scanned</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value" id="threats-detected">0</div>
+            <div class="stat-label">Threats</div>
+        </div>
+    </div>
+
+    <div class="history-section">
+        <div class="section-header">
+            <h3>Recent Scans</h3>
+            <div style="display: flex; gap: 5px;">
+                <button id="toggle-overlay-btn" class="icon-btn" title="Show/Hide Overlay"
+                    style="font-size: 16px;">👁️</button>
+                <button id="clear-stats-btn" class="icon-btn" title="Clear History">🗑️</button>
+            </div>
+        </div>
+        <div id="history-list" class="history-list">
+            <div class="empty-history">Loading history...</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Open Gmail to start scanning emails
+    </div>
+
+    <script src="storage-manager.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>

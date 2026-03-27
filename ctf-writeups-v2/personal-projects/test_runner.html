@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard Test Runner</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+
+        .pass {
+            color: #0f0;
+        }
+
+        .fail {
+            color: #f00;
+        }
+
+        .warning {
+            color: #fa0;
+        }
+
+        pre {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>PhishGuard Test Runner</h1>
+    <div id="results">Running tests...</div>
+
+    <!-- Load Dependencies -->
+    <script src="analysis.js"></script>
+
+    <!-- Test Logic -->
+    <script>
+        const resultsEl = document.getElementById('results');
+        const logs = [];
+
+        // Override console.log to display on page
+        const originalLog = console.log;
+        console.log = (...args) => {
+            originalLog(...args);
+            logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : a).join(' '));
+        };
+
+        window.onload = () => {
+            // We can't easily load test_analysis.js because it executes immediately. 
+            // We'll reimplement a simple runner here or better yet, modify test_analysis.js to specific functions if we could.
+            // But since we can't change test_analysis.js easily without refactoring, let's just create a new runner here using the same cases.
+
+            runTests();
+        };
+
+        function runTests() {
+            let output = '';
+            const analyzer = new PhishGuardAnalyzer();
+
+            const cases = [
+                {
+                    name: "Safe Email",
+                    data: {
+                        senderEmail: "newsletter@company.com",
+                        senderName: "Company Newsletter",
+                        subject: "Monthly Updates",
+                        body: "Here are this month's updates...",
+                        links: [{ text: "Read more", href: "https://company.com/blog" }],
+                        attachments: []
+                    },
+                    expectedStatus: "Safe"
+                },
+                {
+                    name: "Homograph Attack",
+                    data: {
+                        senderEmail: "admin@gооgle.com",
+                        senderName: "Google Support",
+                        subject: "Security Alert",
+                        body: "Verification needed",
+                        links: [],
+                        attachments: []
+                    },
+                    expectedStatus: "Suspicious", // Base penalty is high but maybe not < 50 immediately depending on weights
+                    minScorePenalty: 50
+                },
+                {
+                    name: "Urgency High",
+                    data: {
+                        senderEmail: "alert@warning.com",
+                        senderName: "Security",
+                        subject: "URGENT: ACT NOW IMMEDIATELY",
+                        body: "Your account is suspended. Verify now.",
+                        links: [],
+                        attachments: []
+                    },
+                    expectedStatus: "Suspicious"
+                },
+                {
+                    name: "Dangerous Attachment",
+                    data: {
+                        senderEmail: "hacker@evil.com",
+                        senderName: "Hacker",
+                        subject: "Invoice",
+                        body: "Please see attached",
+                        links: [],
+                        attachments: ["virus.exe"]
+                    },
+                    expectedStatus: "Suspicious" // specific penalty for attachment
+                }
+            ];
+
+            let passed = 0;
+
+            cases.forEach((test, index) => {
+                output += `<h3>Test ${index + 1}: ${test.name}</h3>`;
+                const result = analyzer.analyze(test.data);
+
+                output += `<pre>Result: ${JSON.stringify(result, null, 2)}</pre>`;
+
+                let pass = true;
+                if (test.expectedStatus && result.status !== test.expectedStatus && result.status !== 'Dangerous') {
+                    // Start strict, but allow Dangerous if we expected Suspicious (worse is also fine for detection)
+                    if (test.expectedStatus === 'Suspicious' && result.status === 'Dangerous') {
+                        // acceptable
+                    } else {
+                        pass = false;
+                    }
+                }
+
+                if (test.minScorePenalty) {
+                    if (result.score > (100 - test.minScorePenalty)) pass = false;
+                }
+
+                if (pass) {
+                    output += `<div class="pass">PASS</div>`;
+                    passed++;
+                } else {
+                    output += `<div class="fail">FAIL - Expected ${test.expectedStatus}, Got ${result.status} (Score ${result.score})</div>`;
+                }
+                output += `<hr>`;
+            });
+
+            output = `<h2>Tests Completed: ${passed}/${cases.length} Passed</h2>` + output;
+            resultsEl.innerHTML = output;
+        }
+    </script>
+</body>
+
+</html>
