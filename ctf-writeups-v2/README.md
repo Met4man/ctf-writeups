@@ -68,10 +68,8 @@ A collection of detailed write-ups for CTF challenges and personal projects, org
 
 ## About Me
 
-- 📧 msekena.d@gmail.com
-- 💼 [LinkedIn](https://www.linkedin.com/in/david-msekena-29bb8b296)
-- 🏦 IT & Cybersecurity Intern @ Exim Bank Tanzania
-- 🎓 B.S. Cybersecurity — Institute of Finance Management (GPA 4.4/5.0)
+
+- 🎓 B.S. Cybersecurity 
 - 🏆 Top 2% @ CTFzone Labs
 
 ---
