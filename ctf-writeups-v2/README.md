@@ -1,4 +1,3 @@
-# CTF Write-Ups — David Msekena
 
 > Top 2% @ CTFzone Labs | Cybersecurity Student | Offensive & Defensive Security
 
