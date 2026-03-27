@@ -1,6 +1,6 @@
 # Hack The Box Write-Ups
 
-Write-ups will be added here as machines are completed.
+Write-ups will be added here as soon as machines retire.
 
 ## Machines in Progress
 
@@ -10,9 +10,9 @@ Write-ups will be added here as machines are completed.
 
 ## Categories
 
-- [PWN](pwn/)
-- [Web](web/)
-- [Forensics](forensics/)
-- [Misc](misc/)
+- [Easy](Easy/)
+- [Medium](Medium/)
+- [Hard](Hard/)
+- [CTF Challenges](Challenges/)
 
 > Note: HTB write-ups for active machines are only published after the machine is retired.
