@@ -2,6 +2,9 @@
 
 **AI-Powered Phishing Email Scanner for Gmail**
 
+
+<img width="1557" height="788" alt="image" src="https://github.com/user-attachments/assets/b5093f68-2d8d-4b53-a618-f7bbfe21a651" />
+
 PhishGuard is a Chrome extension that analyzes Gmail emails in real-time to detect phishing attempts and protect you from malicious content.
 
 ![PhishGuard Banner](https://img.shields.io/badge/Security-Phishing_Protection-blue?style=for-the-badge)
