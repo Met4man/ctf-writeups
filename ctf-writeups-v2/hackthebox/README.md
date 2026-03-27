@@ -1,5 +1,7 @@
 # Hack The Box Write-Ups
 
+SEASON 10 - BRONZE TIER 
+
 Write-ups will be added here as soon as machines retire.
 
 ## Machines in Progress
