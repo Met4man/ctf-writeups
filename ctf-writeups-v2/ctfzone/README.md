@@ -1,6 +1,6 @@
 # CTFzone Labs Write-Ups
 
-Challenges from [labs.ctfzone.com](https://labs.ctfzone.com)
+Challenges from https://www.ctfzone.com/#platform
 
 **Rank: Top 2%**
 
@@ -15,7 +15,7 @@ Challenges from [labs.ctfzone.com](https://labs.ctfzone.com)
 ### Web
 | Challenge | Difficulty | Technique |
 |---|---|---|
-| [SSTI Flask Challenge](web/ssti_flask.md) | Easy | Jinja2 SSTI, RCE |
+| Coming Soon | Easy | |
 
 ### Hardware
 | Challenge | Difficulty | Technique |
@@ -24,8 +24,8 @@ Challenges from [labs.ctfzone.com](https://labs.ctfzone.com)
 
 ### Malware Analysis
 | Challenge | Difficulty | Technique |
-|---|---|---|
-| [PoshRat PowerShell RAT](malware/poshrat.md) | Medium | Base64, UTF-16LE, Steganography |
+|---|---|---
+| Coming soon  |  |  |
 
 ### Forensics
 | Challenge | Difficulty | Technique |
